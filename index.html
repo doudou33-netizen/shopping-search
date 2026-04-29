@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ショッピング検索</title>
+  <link rel="apple-touch-icon" href="IMG_8948.png">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -225,6 +226,17 @@
       <div class="site-arrow">›</div>
     </div>
 
+    <div class="site-card" onclick="openSite('yodobashi')">
+      <div class="site-left">
+        <div class="site-icon" style="background:#f0f8ff;">📷</div>
+        <div>
+          <div class="site-name">ヨドバシカメラ</div>
+          <div class="site-desc">在庫・価格をチェック</div>
+        </div>
+      </div>
+      <div class="site-arrow">›</div>
+    </div>
+
   </div>
 
   <div class="section-title">🏷 フリマサイト</div>
@@ -261,6 +273,7 @@
       amazon:    kw => `https://www.amazon.co.jp/s?k=${encodeURIComponent(kw)}`,
       rakuten:   kw => `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(kw)}/`,
       yahoo:     kw => `https://shopping.yahoo.co.jp/search?p=${encodeURIComponent(kw)}&tab=all`,
+      yodobashi: kw => `https://www.yodobashi.com/?word=${encodeURIComponent(kw)}`,
       mercari:   kw => `https://jp.mercari.com/search?keyword=${encodeURIComponent(kw)}`,
       yahooflea: kw => `https://paypayfleamarket.yahoo.co.jp/search/${encodeURIComponent(kw)}?page=1`,
     };
