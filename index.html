@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ショッピング検索</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, sans-serif;
+      background: #f0f4ff;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c5ff6;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 13px;
+      color: #888;
+    }
+
+    .search-box {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 12px rgba(44,95,246,0.1);
+    }
+
+    .search-box label {
+      font-size: 13px;
+      color: #666;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1.5px solid #b8ccf5;
+      font-size: 15px;
+      color: #333;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #2c5ff6;
+    }
+
+    .btn-search {
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px;
+      background: #2c5ff6;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-search:active { opacity: 0.85; }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #2c5ff6;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .sites-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .site-card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .site-card:active {
+      border-color: #2c5ff6;
+      opacity: 0.9;
+    }
+
+    .site-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .site-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .site-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .site-desc {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .site-arrow {
+      font-size: 18px;
+      color: #ccc;
+    }
+
+    .btn-all {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #2c5ff6, #5b8aff);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(44,95,246,0.3);
+    }
+
+    .btn-all:active { opacity: 0.85; }
+
+    .keyword-display {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .keyword-display span {
+      color: #2c5ff6;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🛍 ショッピング検索</h1>
+    <p>各サイトをまとめて検索</p>
+  </header>
+
+  <div class="search-box">
+    <label>🔎 検索キーワード</label>
+    <input
+      class="search-input"
+      id="keyword"
+      type="text"
+      placeholder="検索したいキーワードを入力"
+    >
+    <button class="btn-search" onclick="updateLinks()">キーワードを更新</button>
+  </div>
+
+  <div class="section-title">🛒 ショッピングサイト</div>
+  <div class="keyword-display">検索ワード：<span id="currentKeyword">（未入力）</span></div>
+
+  <div class="sites-grid">
+
+    <div class="site-card" onclick="openSite('amazon')">
+      <div class="site-left">
+        <div class="site-icon" style="background:#fff8e1;">🛒</div>
+        <div>
+          <div class="site-name">Amazon</div>
+          <div class="site-desc">在庫・価格をチェック</div>
+        </div>
+      </div>
+      <div class="site-arrow">›</div>
+    </div>
+
+    <div class="site-card" onclick="openSite('rakuten')">
+      <div class="site-left">
+        <div class="site-icon" style="background:#fff0f0;">🦅</div>
+        <div>
+          <div class="site-name">楽天市場</div>
+          <div class="site-desc">在庫・価格をチェック</div>
+        </div>
+      </div>
+      <div class="site-arrow">›</div>
+    </div>
+
+    <div class="site-card" onclick="openSite('yahoo')">
+      <div class="site-left">
+        <div class="site-icon" style="background:#f0f4ff;">🛍</div>
+        <div>
+          <div class="site-name">Yahoo!ショッピング</div>
+          <div class="site-desc">在庫・価格をチェック</div>
+        </div>
+      </div>
+      <div class="site-arrow">›</div>
+    </div>
+
+  </div>
+
+  <div class="section-title">🏷 フリマサイト</div>
+  <div class="sites-grid">
+
+    <div class="site-card" onclick="openSite('mercari')">
+      <div class="site-left">
+        <div class="site-icon" style="background:#f0fff4;">🏷</div>
+        <div>
+          <div class="site-name">メルカリ</div>
+          <div class="site-desc">フリマ・中古をチェック</div>
+        </div>
+      </div>
+      <div class="site-arrow">›</div>
+    </div>
+
+    <div class="site-card" onclick="openSite('yahooflea')">
+      <div class="site-left">
+        <div class="site-icon" style="background:#fff8f0;">💰</div>
+        <div>
+          <div class="site-name">ヤフーフリマ</div>
+          <div class="site-desc">フリマ・中古をチェック</div>
+        </div>
+      </div>
+      <div class="site-arrow">›</div>
+    </div>
+
+  </div>
+
+  <button class="btn-all" onclick="openAll()">🚀 全サイトを一気に開く</button>
+
+  <script>
+    const urls = {
+      amazon:    kw => `https://www.amazon.co.jp/s?k=${encodeURIComponent(kw)}`,
+      rakuten:   kw => `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(kw)}/`,
+      yahoo:     kw => `https://shopping.yahoo.co.jp/search?p=${encodeURIComponent(kw)}&tab=all`,
+      mercari:   kw => `https://jp.mercari.com/search?keyword=${encodeURIComponent(kw)}`,
+      yahooflea: kw => `https://paypayfleamarket.yahoo.co.jp/search/${encodeURIComponent(kw)}?page=1`,
+    };
+
+    function getKeyword() {
+      return document.getElementById('keyword').value.trim();
+    }
+
+    function updateLinks() {
+      const kw = getKeyword();
+      document.getElementById('currentKeyword').textContent = kw || '（未入力）';
+    }
+
+    function openSite(site) {
+      const kw = getKeyword();
+      if (!kw) {
+        alert('キーワードを入力してください');
+        return;
+      }
+      document.getElementById('currentKeyword').textContent = kw;
+      window.open(urls[site](kw), '_blank');
+    }
+
+    function openAll() {
+      const kw = getKeyword();
+      if (!kw) {
+        alert('キーワードを入力してください');
+        return;
+      }
+      document.getElementById('currentKeyword').textContent = kw;
+      Object.values(urls).forEach(fn => {
+        window.open(fn(kw), '_blank');
+      });
+    }
+  </script>
+</body>
+</html>
